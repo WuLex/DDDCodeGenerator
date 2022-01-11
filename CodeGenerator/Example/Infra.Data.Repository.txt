@@ -1,0 +1,14 @@
+﻿using #NAMESPACE#.Domain.Entities;
+using #NAMESPACE#.Domain.Interfaces.Repository;
+
+namespace #NAMESPACE#.Infra.Data.Repository
+{
+    public class #CLASSNAME#Repository : RepositoryBase<#CLASSNAME#>, I#CLASSNAME#Repository
+    {
+        private readonly ApplicationDbContext _context;
+        public #CLASSNAME#Repository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;
+        }
+    }
+}

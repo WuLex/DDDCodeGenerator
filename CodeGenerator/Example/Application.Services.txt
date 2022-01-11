@@ -1,0 +1,20 @@
+﻿using AutoMapper;
+using #NAMESPACE#.Application.Interfaces;
+using #NAMESPACE#.Application.Services.Common;
+using #NAMESPACE#.Application.ViewModels;
+using #NAMESPACE#.Domain.Entities;
+using #NAMESPACE#.Domain.Interfaces.Service;
+
+namespace #NAMESPACE#.Application.Services
+{
+    public class #CLASSNAME#AppService : ServiceBase<#CLASSNAME#ViewModel, #CLASSNAME#>, I#CLASSNAME#AppService
+    {
+        private readonly IMapper _mapper;
+        private readonly I#CLASSNAME#Service _#VARCLASSNAME#Service;
+        public #CLASSNAME#AppService(IMapper mapper, I#CLASSNAME#Service #VARCLASSNAME#Service) : base(mapper, #VARCLASSNAME#Service)
+        {
+            _mapper = mapper;
+            _#VARCLASSNAME#Service = #VARCLASSNAME#Service;
+        }
+    }
+}

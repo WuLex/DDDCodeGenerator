@@ -1,0 +1,17 @@
+﻿using #NAMESPACE#.Application.Interfaces;
+using #NAMESPACE#.Application.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+
+namespace #NAMESPACE#.Api.Controllers
+{
+    [Route("api/[controller]/")]
+    [ApiController]
+    public class #CLASSNAME#Controller : BaseController<#CLASSNAME#ViewModel>
+    {
+        private readonly I#CLASSNAME#ServiceAppService _#VARCLASSNAME#AppService;
+        public #CLASSNAME#Controller(I#CLASSNAME#AppService #VARCLASSNAME#AppService) : base(#VARCLASSNAME#AppService)
+        {
+            _#VARCLASSNAME#AppService = #CLASSNAME#AppService;
+        }
+    }
+}

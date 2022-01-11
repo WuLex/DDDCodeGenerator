@@ -1,0 +1,9 @@
+﻿using #NAMESPACE#.Application.Interfaces.Common;
+using #NAMESPACE#.Application.ViewModels;
+
+namespace #NAMESPACE#.Application.Interfaces
+{
+    public interface I#CLASSNAME#AppService : IAppServicesBase<#CLASSNAME#ViewModel>
+    {
+    }
+}

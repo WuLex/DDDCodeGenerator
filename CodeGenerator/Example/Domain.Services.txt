@@ -1,0 +1,16 @@
+﻿using #NAMESPACE#.Domain.Entities;
+using #NAMESPACE#.Domain.Interfaces.Repository;
+using #NAMESPACE#.Domain.Interfaces.Service;
+using #NAMESPACE#.Domain.Services.Common;
+
+namespace #NAMESPACE#.Domain.Services
+{
+    public class #NAMESPACE#Service : ServiceBase<#NAMESPACE#>, I#NAMESPACE#Service
+    {
+        private readonly I#CLASSNAME#Repository _#VARCLASSNAME#Repository;
+        public AnexoService(I#CLASSNAME#Repository #VARCLASSNAME#Repository) : base(#VARCLASSNAME#Repository)
+        {
+            _#VARCLASSNAME#Repository = #VARCLASSNAME#Repository;
+        }
+    }
+}
