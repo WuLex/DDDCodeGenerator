@@ -1,7 +1,8 @@
-﻿using CodeGenerator.Common;
+﻿using CodeGenerator.DB;
 using CodeGenerator.Helper;
 using CodeGenerator.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IO.Compression;
@@ -11,10 +12,12 @@ namespace CodeGenerator.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DataDbContext _dataDbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DataDbContext dataDbContext)
         {
             _logger = logger;
+            _dataDbContext = dataDbContext;
         }
 
         public IActionResult Index()
@@ -103,6 +106,37 @@ namespace CodeGenerator.Controllers
             byte[] bytes = System.IO.File.ReadAllBytes(pathZip + @"\" + zipName);
 
             return File(bytes, "application/octet-stream", zipName);
+        }
+
+        [HttpPost]
+        public IActionResult LoadTable([FromBody] string connectStr)
+        {
+            var tables = new List<Table>();
+
+            //Data Source=.;Initial Catalog=BlogDB;Persist Security Info=True;User ID=sa;Password=******
+           
+            if (string.IsNullOrEmpty(connectStr))
+            {
+                return NoContent();
+            }
+            else
+            {
+                ConstHelper.Connstr = connectStr;
+            }
+            _dataDbContext.Database.GetDbConnection().ConnectionString = ConstHelper.Connstr;
+            var tableList = _dataDbContext.Database.SqlQuery<DbTable>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME NOT LIKE '%Migrations%';").ToList();
+
+            for (int i = 0; i < tableList.Count; i++)
+            {
+                tables.Add(new Table()
+                {
+                    Name = tableList[i].TABLE_NAME?.ToString()?.Replace("\"", ""),
+                    GenerateFile = true
+                });
+            }
+
+            TempData["Tables"] = JsonConvert.SerializeObject(tables.OrderBy(x => x.Name).ToList());
+            return Json(new {Action="NamespaceAndTableSelection"});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

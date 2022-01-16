@@ -50,7 +50,42 @@ namespace CodeGenerator.Helper
             string pathToSave = Directory.GetCurrentDirectory() + @"\DownloadFiles\" +
                                 Path.GetFileNameWithoutExtension(templateFilePath).Replace(".", @"\");
 
-            string fileName = className + "." + "cs";
+            #region 生成文件规则
+            //string filename = System.IO.Path.GetFileName(templateFilePath);//文件名  “Api.Controllers.txt”
+            //string extension = System.IO.Path.GetExtension(templateFilePath);//扩展名 “.txt”
+            string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(templateFilePath);// 没有扩展名的文件名 “Api.Controllers”
+
+            string fileName = "";  //className + "." + "cs";
+            if (fileNameWithoutExtension.Contains("Controllers"))
+            {
+                fileName= className + "Controller." + "cs";
+            }
+            else if (fileNameWithoutExtension.Contains("Application.Interfaces"))
+            {
+                fileName = "I"+className + "." + "cs";
+            }
+            else if (fileNameWithoutExtension.Contains("Application.Services"))
+            {
+                fileName = className + "AppService." + "cs";
+            }
+            else if (fileNameWithoutExtension.Contains("Domain.Interfaces.Repository"))
+            {
+                fileName = "I" + className + "Repository." + "cs";
+            }
+            else if (fileNameWithoutExtension.Contains("Domain.Interfaces.Services"))
+            {
+                fileName = "I" + className + "Service." + "cs";
+            }
+            else if (fileNameWithoutExtension.Contains("Domain.Services"))
+            {
+                fileName = className + "Service." + "cs";
+            }
+            else if (fileNameWithoutExtension.Contains("Infra.Data.Repository"))
+            {
+                fileName = className + "Repository." + "cs";
+            }
+
+            #endregion
 
             var path = Path.Combine(pathToSave, fileName);
 
@@ -64,9 +99,8 @@ namespace CodeGenerator.Helper
             }
         }
 
-
         /// <summary>
-        /// 
+        /// 删除旧的压缩包文件
         /// </summary>
         /// <param name="filesNameToGenerate"></param>
         /// <param name="downloadFilePath"></param>
