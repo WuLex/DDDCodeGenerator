@@ -62,7 +62,7 @@ namespace CodeGenerator.Helper
             }
             else if (fileNameWithoutExtension.Contains("Application.Interfaces"))
             {
-                fileName = "I"+className + "." + "cs";
+                fileName = "I"+className + "AppService." + "cs";
             }
             else if (fileNameWithoutExtension.Contains("Application.Services"))
             {
